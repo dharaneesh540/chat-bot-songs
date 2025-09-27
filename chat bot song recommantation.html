@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamil Song Recommender Chatbot</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    background-size: cover;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 0;
+  }
+  .chatbot {
+    position: relative;
+    z-index: 1;
+    width: 360px;
+    height: 480px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .chatbot-header {
+    background: #007BFF;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px 12px 0 0;
+  }
+  .chatbot-messages {
+    flex: 1;
+    padding: 15px;
+    font-size: 15px;
+    overflow-y: auto;
+    background: #f9f9f9;
+  }
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid #ccc;
+  }
+  .options button {
+    flex: 1 1 45%;
+    padding: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .options button:hover { background: #0056b3; }
+  .message { margin: 6px 0; }
+  .bot { color: #007BFF; }
+  .user { color: #28a745; }
+</style>
+</head>
+<body>
+
+<div class="chatbot">
+  <div class="chatbot-header">🎵 Tamil Song Recommender</div>
+  <div class="chatbot-messages" id="messages"></div>
+  <div class="options">
+    <button onclick="sendMood('happy')">😊 Happy</button>
+    <button onclick="sendMood('sad')">😢 Sad</button>
+    <button onclick="sendMood('party')">🎉 Party</button>
+    <button onclick="sendMood('love')">❤ Love</button>
+    <button onclick="sendMood('chill')">🌙 Chill</button>
+  </div>
+</div>
+
+<script>
+const messages = document.getElementById("messages");
+
+function addMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.className = "message " + sender;
+  msg.textContent = text;
+  messages.appendChild(msg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function sendMood(mood) {
+  addMessage("user", "You: " + mood);
+
+  let reply = "";
+  let spotifyLink = "";
+
+  // Tamil playlists
+  switch(mood) {
+    case "happy":
+      reply = "Feel happy with these Tamil hits! 🎉";
+      spotifyLink = "https://open.spotify.com/playlist/37i9dQZF1DXdPec7aLTmlC"; // Tamil Happy Hits
+      break;
+    case "sad":
+      reply = "Feeling sad? Try this Tamil playlist 😢";
+      spotifyLink = "https://open.spotify.com/playlist/37i9dQZF1DX1i3hvzHpcQV"; // Tamil Sad Hits
+      break;
+    case "party":
+      reply = "Time to party with Tamil beats! 🥳";
+      spotifyLink = "https://open.spotify.com/playlist/37i9dQZF1DX4Im4BTs2WMg"; // Tamil Party Hits
+      break;
+    case "love":
+      reply = "Romantic Tamil vibes ❤";
+      spotifyLink = "https://open.spotify.com/playlist/1uvSuVApwODnOSBGkpBiR6"; // Tamil Love Songs
+      break;
+    case "chill":
+      reply = "Relax with these Tamil tracks 🌙";
+      spotifyLink = "https://open.spotify.com/playlist/0mpwfhIYwjxyS5D2AgufyG"; // Tamil Chill Hits
+      break;
+    default:
+      reply = "Explore these popular Tamil songs!";
+      spotifyLink = "https://open.spotify.com"; // Spotify Home
+  }
+
+  addMessage("bot", "Bot: " + reply);
+
+  setTimeout(() => {
+    window.open(spotifyLink, "_blank"); // open playlist in new tab
+  }, 800);
+}
+</script>
+
+</body>
+</html>
